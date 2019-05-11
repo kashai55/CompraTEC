@@ -1,0 +1,45 @@
+mutation{
+  createOrder(client:"prueba",product:"Pasta",quantity:1){
+    id
+    client
+    product
+    quantity
+  }
+}
+
+{
+  allOrders{
+    id
+    client
+    product
+    quantity
+  }
+}
+
+{
+  order(product:"prueba"){
+    id
+    client
+    product
+    quantity
+  }
+}
+
+mutation{
+  deleteOrder(id: "7dfbe2ad-2038-4a1c-84d4-7827e18bc9bf"){
+    id
+    client
+    product
+    quantity
+  }
+}
+
+mutation{
+  updateOrder(id: "cca33dfa-088d-4c43-a243-961817de95a2",client:"modificado"){
+    id
+    client
+    product
+    quantity
+  }
+}
+
