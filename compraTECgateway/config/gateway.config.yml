@@ -1,0 +1,45 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+  host: localhost
+apiEndpoints:
+  api:
+    host: localhost
+    paths: '/ip'
+  catalog:
+    host: 'localhost'
+    paths: '/catalog'
+serviceEndpoints:
+  httpbin:
+    url: 'https://httpbin.org'
+  catalogService :
+    url: 'http://127.0.0.1:5000/graphql?query=%7B%0A%20%20allProducts%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20name%2C%0A%20%20%20%20%20%20%20%20kind%2C%0A%20%20%20%20%20%20%20%20price%2C%0A%20%20%20%20%20%20%20%20idnum%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D'
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  default:
+    apiEndpoints:
+      - api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: httpbin
+              changeOrigin: true
+
+  catalog-pipeline:
+    apiEndpoints:
+      - catalog
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: catalogService
+              changeOrigin: true
+              
